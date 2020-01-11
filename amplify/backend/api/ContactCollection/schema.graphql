@@ -1,0 +1,7 @@
+type UserContact @model  @key(fields: ["email"]) @auth(rules: [{ allow: public, provider: iam, operations: [create]}, { allow: groups, groups: ["admin"]}])   {
+  email: AWSEmail!
+  name: String!
+  phone: AWSPhone
+  interests: [String!]
+  description: String
+}

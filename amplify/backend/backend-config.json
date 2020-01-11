@@ -1,0 +1,36 @@
+{
+	"auth": {
+		"contactcollectionce133bd7": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"api": {
+		"ContactCollection": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [
+						{
+							"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+							"userPoolConfig": {
+								"userPoolId": "authcontactcollectionce133bd7"
+							}
+						}
+					],
+					"defaultAuthentication": {
+						"authenticationType": "AWS_IAM"
+					}
+				}
+			}
+		}
+	},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

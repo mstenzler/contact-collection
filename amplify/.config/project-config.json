@@ -1,0 +1,17 @@
+{
+    "projectName": "contact-collection",
+    "version": "3.0",
+    "frontend": "javascript",
+    "javascript": {
+        "framework": "none",
+        "config": {
+            "SourceDir": "src",
+            "DistributionDir": "dist/pwa",
+            "BuildCommand": "quasar build -m pwa",
+            "StartCommand": "quasar server --history dist/pwa"
+        }
+    },
+    "providers": [
+        "awscloudformation"
+    ]
+}
