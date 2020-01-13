@@ -1,5 +1,6 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+var path = require('path');
 
 module.exports = function (ctx) {
   return {
@@ -7,6 +8,7 @@ module.exports = function (ctx) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
     boot: [
+      'amplify'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -45,7 +47,7 @@ module.exports = function (ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Notify']
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -54,7 +56,7 @@ module.exports = function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       scopeHoisting: true,
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       showProgress: true,
       gzip: false,
       analyze: false,
@@ -64,6 +66,32 @@ module.exports = function (ctx) {
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
       extendWebpack (cfg) {
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          '@': path.resolve(__dirname, './src')
+        }
+      },
+      chainWebpack(config) {
+        config.module // optional
+          .rule('graphql')
+          .test(/\.graphql$/)
+          .use('graphql-tag/loader')
+          .loader('graphql-tag/loader')
+          .end()
+
+        config.module
+          .rule('mjs')
+          .test(/\.mjs$/)
+          .include.add(/node_modules/)
+          .end()
+          .type('javascript/auto')
+          .end()
+
+        config.resolve.extensions
+          .add('.mjs')
+          .add('.gql')
+          .add('.graphql')
+          .end()
       }
     },
 
