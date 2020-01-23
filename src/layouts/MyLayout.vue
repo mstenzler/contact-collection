@@ -14,10 +14,10 @@
 
         <div v-if="signedIn">
           <q-icon name="person"></q-icon>
-          {{user.username}}
-          <q-btn  @click="signOut" label="Sign Out"></q-btn>
+          {{username}}
+          <q-btn  @click="signOut" label="Sign Out" class="t-button"></q-btn>
         </div>
-        <div v-else>Not signed in</div>
+        <div v-else><q-icon name="person_outline" /></div>
 
       </q-toolbar>
     </q-header>
@@ -37,7 +37,7 @@
         </q-item>
 
         <div v-if="isLoggedIn">
-          <q-item clickable :to="{name: 'profile'}">
+          <q-item clickable :to="{name: 'profile', params: { user: user, isAdmin: true }}">
             <q-item-section avatar>
               <q-icon name="settings"/>
             </q-item-section>
@@ -48,7 +48,7 @@
           </q-item>
         </div>
 
-        <div v-if="isLoggedIn">
+        <div v-if="isAdmin">
            <q-item clickable :to="{name: 'admin'}">
             <q-item-section avatar>
               <q-icon name="settings"/>
@@ -86,7 +86,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view/>
+      <router-view  :user="user" :isAdmin="isAdmin" :username="username"/>
     </q-page-container>
   </q-layout>
 </template>
@@ -97,12 +97,37 @@ export default {
   name: 'MyLayout',
   data () {
     return {
-      user: '',
+      user: null,
       signedIn: 'false',
       leftDrawerOpen: false//this.$q.platform.is.desktop
     }
   },
   computed: {
+    username() {
+      return (this.user && this.user.username ? this.user.username : this.user && this.user.attributes ? this.user.attributes.email : '');
+    },
+    isAdmin() {
+      let groups = this.groups;
+      console.log("groups = ", groups);
+      if (groups && groups.includes('siteadmin')) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    groups() {
+      try {
+        if (this.user.signInUserSession.accessToken.payload['cognito:groups']) {
+          return this.user.signInUserSession.accessToken.payload['cognito:groups'];
+        } else {
+          return []
+        }
+
+      } catch(err) {
+        console.log("Could not get groups")
+        return [];
+      }
+    },
     isLoggedIn () {
       return this.signedIn
     }
@@ -110,17 +135,19 @@ export default {
   mounted () {
     this.$AmplifyEventBus.$on('authState', info => {
       this.signedIn = true
-    })
-  },
-  beforeCreate () {
+    });
     this.$Auth.currentAuthenticatedUser()
       .then(user => {
-        this.user = user
-        this.signedIn = true
+        this.user = user;
+        this.signedIn = true;
       })
       .catch(() => {
-        this.signedIn = false
+        this.user = null;
+        this.signedIn = false;
       })
+  },
+  beforeCreate () {
+   
   },
   methods: {
     openURL,

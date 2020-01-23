@@ -9,6 +9,7 @@ export default {
   name: 'App',
   data() {
     return {
+      user: null,
       signedIn: false
     }
   },
@@ -23,12 +24,6 @@ export default {
         this.signedIn = false
       }
     });
-    this.$Auth.currentAuthenticatedUser()
-      .then(user => {
-        this.signedIn = true
-      })
-      // eslint-disable-next-line
-      .catch(() => this.signedIn = false)
   }
 };
 </script>

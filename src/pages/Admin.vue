@@ -48,6 +48,9 @@ export default {
     EntryList,
     ...components
   },
+  props: {
+    isAdmin: { type: Boolean, default: false }
+  },
   data() {
     return {
       name: '',
@@ -121,9 +124,11 @@ export default {
   },
   async mounted() {
     console.log("mounted!")
+    console.log("in Admin.Mounted. isAdmin = ", this.isAdmin );
     this.getListEntriesQuery();
   },
   beforeCreate() {
+    //console.log("in beforeCreate. isAdmin = ", this.isAdmin );
     console.log("mutation = ", mutations.createUserContact )
   }
 };

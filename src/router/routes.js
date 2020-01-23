@@ -29,6 +29,7 @@ const routes = [{
   children: [{
     name: 'profile',
     path: '',
+    props: true,
     component: () => import('pages/Profile.vue'),
     meta: {
       requiresAuth: true
@@ -43,7 +44,7 @@ const routes = [{
     path: '',
     component: () => import('pages/Admin.vue'),
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   }]
 }

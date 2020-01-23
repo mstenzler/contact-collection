@@ -2,8 +2,12 @@
   <div class="auth">
     <h2>Sign In</h2>
     <form @submit.prevent="signIn">
-      <q-input square filled color="teal" label="Username" v-model="form.username"/>
-      <q-input square filled color="teal" label="Password" type="password" v-model="form.password"/>
+      <q-input label="Username" v-model="form.username"/>
+      <q-input  label="Password" :type="passwordType" v-model="form.password">
+        <template v-slot:append>
+          <q-icon :name="showPasswordIcon" @click="toggleShowPassword" />
+        </template>
+      </q-input>
       <div class="row">
         <q-btn type="submit" label="Sign In" class="authButton">
           <template v-slot:loading>
@@ -22,6 +26,7 @@ export default {
   name: 'SignIn',
   data () {
     return {
+      showPassword: false,
       form: {
         username: '',
         password: '',
@@ -29,7 +34,22 @@ export default {
       }
     }
   },
+  computed: {
+     passwordType() {
+      let type = (this.showPassword ? 'text' : 'password');
+      console.log("pasword type = ", type);
+      return type;
+    },
+    showPasswordIcon() {
+      return (this.showPassword ? 'visibility_off' : 'visibility');
+    }
+  },
   methods: {
+    toggleShowPassword() {
+    //  console.log("In toggleShowPassword. this.showPassword = ", this.showPassword);
+      this.showPassword = !this.showPassword;
+      //console.log("End Toggle. this.showPassword = ", this.showPassword);
+    },
     async signIn () {
       //let that = this;
       const { username, password } = this.form

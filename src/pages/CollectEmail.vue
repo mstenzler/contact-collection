@@ -31,17 +31,20 @@
                   :rules="[ val => val && val.length > 0 || 'Missing Email', val => testEmail(val) || 'Bad email format' ]"
                   v-model="email" />
               
-                <q-input type="text" ref="phone" outline color="teal" label="Phone" clearable lazy-rules v-model="phone" />
+                <q-input type="text" ref="phone" outline color="teal" label="Phone" clearable lazy-rules v-model="phone"
+                  mask="(###) ### - ####"
+                  hint="Mask: (###) ### - ####" />
               
-              
+                <p>&nbsp;</p>
                 <label>What are you looking for?</label>
                 <q-option-group v-model="interests" :options="lookingOptions" label="Interests" type="checkbox" inline />
   
                 <label>What types of events do you like?</label>
                 <q-option-group v-model="interests" :options="interestOptions" label="Interests" type="checkbox" inline />
-           
-                <button :disabled="loading" @click.stop.prevent="mutate">Enter Info</button>
-                <div v-show="errors"> Errors ={{ errors }}</div>
+                <p>&nbsp;</p>
+                <q-btn :disabled="loading" @click.stop.prevent="mutate" color="primary" label="Enter Info"></q-btn>
+
+                <div v-show="errors && errors.length > 0" class="error"><span v-for="(errorMsg, index) in errors" class="errorMessage"> - {{ errorMsg }}</span></div>
               </div>
             </form>
 
@@ -78,6 +81,7 @@ export default {
       interests: [],
       status: '',
       error: '',
+      errorTest: ["First Error!", "second Error!"],
       lookingOptions: [ {
         label: 'Dating', 
         value: 'Dating'
@@ -134,6 +138,16 @@ export default {
     }
   },
   methods: {
+    clearForm() {
+      this.name = '';
+      this.email = '';
+      this.phone = '';
+      this.description = '';
+      this.interests = [];
+      this.error = '';
+      this.$refs.name.resetValidation();
+      this.$refs.email.resetValidation();
+    },
     async onSubmit() {
       let data = this.formData;
       console.log("In onSubmit. formData = ", data);
@@ -148,6 +162,12 @@ export default {
     },
      onCreateFinished() {
       console.log('Contact created!');
+      this.clearForm();
+      this.$q.notify({
+            icon: 'done',
+            color: 'positive',
+            message: 'Submssion Sucessful!'
+          });
     }
   },
   beforeCreate() {

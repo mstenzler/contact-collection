@@ -35,7 +35,7 @@
         :rules="[val => !!val || 'Field is required']"
         />
         <div class="row">
-          <q-btn type="submit" @click.prevent="ignUp" label="Sign Up" class="authButton">
+          <q-btn type="submit" @click.prevent="signUp" label="Sign Up" class="authButton">
             <template v-slot:loading>
               <q-spinner-facebook/>
             </template>

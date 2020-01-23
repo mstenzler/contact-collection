@@ -1,1 +1,9 @@
 // app global css in SCSS form
+.error {
+  margin: 1.5em 0 1.5em 0;
+  color: darken(red, 10%);
+}
+
+.errorMessage {
+  display: block;
+}
