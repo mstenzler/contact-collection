@@ -1,6 +1,6 @@
 {
     "identityPoolName": "contactcollectionce133bd7_identitypool_ce133bd7",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "contacce133bd7",
     "userPoolName": "contactcollectionce133bd7_userpool_ce133bd7",
     "autoVerifiedAttributes": [
@@ -44,7 +44,18 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
-    "userPoolGroupList": [],
-    "dependsOn": []
+    "useDefault": "manual",
+    "userPoolGroupList": [
+        "siteadmin"
+    ],
+    "dependsOn": [],
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "triggers": "{}",
+    "hostedUI": false,
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [],
+    "thirdPartyAuth": false
 }
