@@ -12,8 +12,7 @@
         </q-card-section>
 
         <q-card-section>
-          Sign up to be informed about the new Crafted Crowds site!
-          Coming soon. Sign up.
+          Sign up to be informed about the new upcoming Crafted Crowds site!
         </q-card-section>
       </q-card>
 
@@ -23,17 +22,17 @@
           <template slot-scope="{ loading, mutate, errors }">
             <form class="q-pa-sm">
               <div class="q-pa-sm" style="max-width: 1000px">
-                <q-input type="text" ref="name" outline label="Name" clearable lazy-rules 
+                <q-input type="text" ref="name" outline label="Name *" clearable lazy-rules 
                    :rules="[ val => val && val.length > 0 || 'Missing Name']"
                    v-model="name" />
               
-                <q-input type="text" ref="email" outline color="teal" label="Email" clearable lazy-rules  
+                <q-input type="text" ref="email" outline label="Email *" clearable lazy-rules  
                   :rules="[ val => val && val.length > 0 || 'Missing Email', val => testEmail(val) || 'Bad email format' ]"
                   v-model="email" />
               
-                <q-input type="text" ref="phone" outline color="teal" label="Phone" clearable lazy-rules v-model="phone"
-                  mask="(###) ### - ####"
-                  hint="Mask: (###) ### - ####" />
+                <q-input type="text" ref="phone" outline label="Phone" clearable lazy-rules v-model="phone"
+                  mask="###-###-####"
+                  hint="Mask: ###-###-####" />
               
                 <p>&nbsp;</p>
                 <label>What are you looking for?</label>
@@ -44,7 +43,7 @@
                 <p>&nbsp;</p>
                 <q-btn :disabled="loading" @click.stop.prevent="mutate" color="primary" label="Enter Info"></q-btn>
 
-                <div v-show="errors && errors.length > 0" class="error"><span v-for="(errorMsg, index) in errors" class="errorMessage"> - {{ errorMsg }}</span></div>
+                <div v-show="errors && errors.length > 0" class="error"><span v-for="(errorMsg, index) in errors" class="errorMessage"> - {{ getMessage(errorMsg) }}</span></div>
               </div>
             </form>
 
@@ -101,21 +100,65 @@ export default {
       ],
       interestOptions: [ 
       {
-        label: 'Happy Hours',
-        value: 'Happy Hours'
+        label: 'Happy Hour',
+        value: 'Happy Hour'
+      },
+      {
+        label: 'Movie Night',
+        value: 'Movie Night'
       },
       {
         label: 'Dinning',
         value: 'Dinning'
       },
       {
+        label: 'Theatre',
+        value: 'Theatre'
+      },
+      {
+        label: 'Single Mingle',
+        value: 'Single Mingle'
+      },
+      {
         label: 'Game Nights',
         value: 'Game Nights'
       },
       {
+        label: 'Karoke',
+        value: 'Karoke'
+      },
+      {
+        label: 'Trivia',
+        value: 'Trivia'
+      },
+      {
+        label: 'Wine Tasting',
+        value: 'Wine Tasting'
+      },
+      {
+        label: 'Couples Get Together',
+        value: 'Couples Get Together'
+      },
+      {
+        label: 'Classes/Workshops',
+        value: 'Classes/Workshops'
+      },
+      {
+        label: 'Casual Walk',
+        value: 'Casual Walk'
+      },
+      {
+        label: 'Hiking',
+        value: 'Hiking'
+      },
+      {
         label: 'Biking',
         value: 'Biking'
-      }
+      },
+      {
+        label: 'Outdoor Activity',
+        value: 'Outdoor Activity'
+      },
       ]
     }
   },
@@ -133,7 +176,10 @@ export default {
     },
     createAddUserContactMutation() {
       let data = this.formData;
-      console.log("In createUserContactMutation. data = ", data);
+      // if ( data.phone ) {
+      //   data.phone = '+1' + data.phone.replace(/[\s\-\(\)]/g, '');
+      // }
+      console.log("========== In createUserContactMutation. ============= data = ", data);
       return graphqlOperation(mutations.createUserContact, {input: data });
     }
   },
@@ -155,6 +201,13 @@ export default {
       console.log("Got graphQL response: ", response);
       this.status = response;
 
+    },
+    getMessage(msg) {
+      if (msg && msg.message) {
+        return msg.message;
+      } else {
+        return msg;
+      }
     },
     testEmail(value) {
       let pattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
