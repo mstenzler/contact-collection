@@ -12,6 +12,18 @@ const routes = [{
   }]
 },
 {
+  path: '/brunch',
+  component: () => import('layouts/MyLayout.vue'),
+  children: [{
+    path: '',
+    name: 'brunch',
+    component: () => import('pages/Brunch.vue'),
+    meta: {
+      requiresAuth: false
+    }
+  }]
+},
+{
   path: '/auth',
   component: () => import('layouts/MyLayout.vue'),
   children: [{

@@ -24,7 +24,7 @@
 
     <q-drawer v-model="leftDrawerOpen" bordered content-class="bg-grey-2">
       <q-list>
-        <q-item-label header>Crafted Crowds app</q-item-label>
+        <q-item-label header>Crafted Crowds App</q-item-label>
 
         <q-item clickable :to="{name: 'collect'}">
           <q-item-section avatar>
@@ -33,6 +33,16 @@
           <q-item-section>
             <q-item-label>Signup with Email</q-item-label>
             <q-item-label caption>Signup receive information on app..</q-item-label>
+          </q-item-section>
+        </q-item>
+
+         <q-item clickable :to="{name: 'brunch'}">
+          <q-item-section avatar>
+            <q-icon name="event"/>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Brunch</q-item-label>
+            <q-item-label caption>Reserve seat for event</q-item-label>
           </q-item-section>
         </q-item>
 
