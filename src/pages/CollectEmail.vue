@@ -7,12 +7,14 @@
          >
          <q-card-section>
           <div class="text-h4">
-            Crafted Crowds - New Site coming soon.
+            <!-- Crafted Crowds - New Site coming soon. -->
+            Hoboken Social Sandbox User Info.
           </div>
         </q-card-section>
 
         <q-card-section>
-          Sign up to be informed about the new upcoming Crafted Crowds site!
+          <!-- Sign up to be informed about the new upcoming Crafted Crowds site! -->
+          Enter your contact info to be informed about new upcoming events! 
         </q-card-section>
       </q-card>
 
