@@ -36,15 +36,6 @@
           </q-item-section>
         </q-item>
 
-         <q-item clickable :to="{name: 'brunch'}">
-          <q-item-section avatar>
-            <q-icon name="event"/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Brunch</q-item-label>
-            <q-item-label caption>Reserve seat for event</q-item-label>
-          </q-item-section>
-        </q-item>
 
         <div v-if="isLoggedIn">
           <q-item clickable :to="{name: 'profile', params: { user: user, isAdmin: true }}">
